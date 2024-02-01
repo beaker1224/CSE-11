@@ -1,4 +1,4 @@
-/*class Comment{
+class Comment{
     int replies;
     String replies;
     
@@ -15,5 +15,5 @@ class Open1B{
     Comment ex1 = new Comment(10, " nice");
     String ex2 = ex1.nreplies();
 
-}*/
+}
 
