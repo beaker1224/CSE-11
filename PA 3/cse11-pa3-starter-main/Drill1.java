@@ -8,7 +8,7 @@ class Y{
     X field1;
     String field2;
 
-
+}
 
 class Z{
     Y fieldY;
