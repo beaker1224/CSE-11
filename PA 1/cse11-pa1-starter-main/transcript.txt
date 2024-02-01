@@ -1,0 +1,54 @@
+QUESTION 3
+
+PS D:\study\UCSD Undergrade classes\CSE\CSE 11\PA 1\cse11-pa1-starter-main> ./run DesignRecipeExamples
+Picked up _JAVA_OPTIONS: -Duser.language=en -Duser.country=US
+Picked up _JAVA_OPTIONS: -Duser.language=en -Duser.country=US
+WARNING: A Java agent has been loaded dynamically (C:\Users\qq121\AppData\Local\Temp\byteBuddyAgent6903691877559661188.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+Tester Library v.3.0
+-----------------------------------
+Tests defined in the class: DesignRecipeExamples:
+---------------------------
+DesignRecipeExamples:
+---------------
+new DesignRecipeExamples:1(
+ this.ans1_1 = 6
+ this.ans1_2 = 18
+ this.ans2_1 = 5
+ this.ans2_2 = 10
+ this.ans2_3 = 6
+ this.ans3_1 = -17
+ this.ans3_2 = 5) the results were calculated by Google.
+---------------
+No test methods found.
+---------------------------------------------------------------------------
+QUESTION 4
+
+PS D:\study\UCSD Undergrade classes\CSE\CSE 11\PA 1\cse11-pa1-starter-main> ./run DesignRecipeExamples
+Picked up _JAVA_OPTIONS: -Duser.language=en -Duser.country=US
+Picked up _JAVA_OPTIONS: -Duser.language=en -Duser.country=US
+WARNING: A Java agent has been loaded dynamically (C:\Users\qq121\AppData\Local\Temp\byteBuddyAgent9687133525538139648.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+Tester Library v.3.0
+-----------------------------------
+Tests defined in the class: DesignRecipeExamples:
+---------------------------
+DesignRecipeExamples:
+---------------
+new DesignRecipeExamples:1(
+ this.ans1_1 = 6
+ this.ans1_2 = 18
+ this.ans2_1 = 5
+ this.ans2_2 = 10
+ this.ans2_3 = 6
+ this.ans3_1 = -17
+ this.ans3_2 = 5
+ this.ans4_1 = 150
+ this.ans4_2 = 65
+ this.ans4_3 = 3120)
+---------------
+No test methods found.
