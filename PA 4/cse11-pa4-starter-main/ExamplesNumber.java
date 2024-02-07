@@ -91,9 +91,14 @@ public Number getMax(Number other){
     int thisn = this.numerator() * other.denominator();
     int othern = this.denominator() * other.numerator();
     if(thisn >= othern){
-        return new Fraction(this.numerator(), this.denominator());
+        return new Fraction(this.numerator(), this.denominator());    
     }else{
-        return new Fraction(other.numerator(), other.denominator());
+        if(other.denominator() == 1){
+            return new WholeInteger(other.numerator());
+        }else{
+            return new Fraction(other.numerator(), other.denominator());
+        }
+        
     }
 }
 public String toString(){
@@ -121,7 +126,7 @@ class ExamplesNumber{
         t.checkExpect(this.ians3.denominator(), 1);
         t.checkExpect(this.ians1.add(ians2).numerator(), 33);
         t.checkExpect(this.ians3.multiply(ians1).numerator(), 500);
-        t.checkExpect(this.ians5.getMax(ians4).numerator(), 78);
+        t.checkExpect(this.ians3.getMax(ians4).toString(), "78");
         t.checkExpect(this.ians1.toString(), "20");
         t.checkExpect(this.ians1.toDouble(), 20.0);
         //Fraction number testing
@@ -135,6 +140,7 @@ class ExamplesNumber{
         //testing for both
         t.checkExpect(this.ians2.getMax(fans4).toString(), "13");
         t.checkExpect(this.ians5.getMax(fans5).toString(), "2/7");
+        t.checkExpect(this.fans3.getMax(ians4).toString(), "78");
     }
 
 
