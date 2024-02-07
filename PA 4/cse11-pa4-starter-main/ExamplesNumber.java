@@ -43,14 +43,12 @@ public Number multiply(Number other){
     }
 }
 public Number getMax(Number other){
-    int thisn = this.numerator() * other.denominator();
-    int othern = this.denominator() * other.numerator();
-    if(thisn >= othern){
-        return new WholeInteger(this.numerator());
-    }else if(this.denominator() == other.denominator()){
-        return new WholeInteger(other.numerator());
+    double n1 = this.numerator()/this.denominator();
+    double n2 = other.numerator()/other.denominator();
+    if(n1 >= n2){
+        return this;
     }else{
-        return new Fraction(other.numerator(), other.denominator());
+        return other;
     }
 }
 public String toString(){
