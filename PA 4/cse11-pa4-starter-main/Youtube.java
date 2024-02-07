@@ -4,6 +4,7 @@ interface Comment{
     public boolean isCommentByAuthor(User author);
     public int totalLikes();
     public String unrollCommentThread();
+    public int totalInteractions();
 }
 
 class User{
@@ -38,9 +39,9 @@ VideoComment(String text, int likes, int replies, User author){
     }
 
     public String unrollCommentThread(){
-        return author.username + "\n" +
+        return "\n" + author.username + "\n" +
         this.likes + " likes" + "; " + this.replies + " replies" + "\n" +
-        this.text;
+        this.text + "\n";
     }
 
     public int totalInteractions(){
@@ -69,22 +70,63 @@ public int totalLikes(){
     return this.likes + this.replyTo.totalLikes();
 }
 public String unrollCommentThread(){
-    return replyTo + "\n" + 
+    return "\n" + replyTo + "\n" + 
     this.author.username + "\n" + 
     this.likes + " likes" + "\n" + 
-    this.text;
+    this.text + "\n";
+}
+public int totalInteractions(){
+    return this.likes;
 }
 }
 
 class Youtube{
     User u1 = new User("test_username1", "Test User Full Name 1");
     User u2 = new User("test_username2", "Test User Full Name 2");
+    User u3 = new User("test_username3", "Test User Full Name 3");
+
 
     Comment vc = new VideoComment("This is a great example to use the Tester Library!", 10, 5, u1);
+    Comment vc1 = new VideoComment("You know that it is not a good example right?", 200, 180, u3);
+
     Comment rc1 = new ReplyComment("Yeah, I agree!", 7, u2, vc);
     Comment rc2 = new ReplyComment("Thanks for acknowledgment!", 4, u1, rc1);
 
     String rcans0 = vc.unrollCommentThread();
     String rcans1 = rc1.unrollCommentThread();
     String rcans2 = rc2.unrollCommentThread();
+
+    void testTotalLikes(Tester t){
+        //totalLikes(); in VideoComments
+        t.checkExpect(this.vc.totalLikes(), 10);
+        t.checkExpect(this.vc1.totalLikes(), 200);
+        //isCommentByAuthor(User author) in VideoComments
+        t.checkExpect(this.vc.isCommentByAuthor(u1), true);
+        t.checkExpect(this.vc1.isCommentByAuthor(u1), false);
+        //unrollCommentThread(); in VideoComment
+        t.checkExpect(this.vc.unrollCommentThread(), "\n" + u1.username + "\n" +
+        10 + " likes" + "; " + 5 + " replies" + "\n" +
+        "This is a great example to use the Tester Library!" + "\n");
+        t.checkExpect(this.vc1.unrollCommentThread(), "\n" + u3.username + "\n" +
+        200 + " likes" + "; " + 180 + " replies" + "\n" +
+        "You know that it is not a good example right?" + "\n");
+        //totalInteractions() in VideoComment
+        t.checkExpect(this.vc.totalInteractions(), 5);
+        t.checkExpect(this.vc1.totalInteractions(), 180);
+        //totalLikes(); in ReplyComment
+        t.checkExpect(this.rc1.totalLikes(), 7);
+        t.checkExpect(this.rc2.totalLikes(), 4);
+        //isCommentByAuthor(User author) in ReplyComment
+        t.checkExpect(this.rc1.isCommentByAuthor(u1), false);
+        t.checkExpect(this.rc2.isCommentByAuthor(u1), true);
+        //unrollCommentThread(); in ReplyComment
+        t.checkExpect(this.rc1.unrollCommentThread(), "\n" + replyTo + "\n" + 
+        u2.username + "\n" + 
+        7 + " likes" + "\n" + 
+        "Yeah, I agree!" + "\n";);
+        t.checkExpect(this.rc2.unrollCommentThread(), "\n" + replyTo + "\n" + 
+        u1.username + "\n" + 
+        4 + " likes" + "\n" + 
+        "Thanks for acknowledgment!" + "\n";);
+    }
 }
