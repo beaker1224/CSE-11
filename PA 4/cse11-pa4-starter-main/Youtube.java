@@ -91,8 +91,10 @@ class Youtube{
 
     Comment rc1 = new ReplyComment("Yeah, I agree!", 7, u2, vc);
     Comment rc2 = new ReplyComment("Thanks for acknowledgment!", 4, u1, rc1);
+    Comment rc3 = new ReplyComment("I am the author", 0, u1, vc);
+    Comment rc4 = new ReplyComment("once again, I am the author", 0, u1, rc3);
 
-    String rcans0 = vc.unrollCommentThread();
+    String vcans0 = vc.unrollCommentThread();
     String rcans1 = rc1.unrollCommentThread();
     String rcans2 = rc2.unrollCommentThread();
 
@@ -111,22 +113,18 @@ class Youtube{
         200 + " likes" + "; " + 180 + " replies" + "\n" +
         "You know that it is not a good example right?" + "\n");
         //totalInteractions() in VideoComment
-        t.checkExpect(this.vc.totalInteractions(), 5);
-        t.checkExpect(this.vc1.totalInteractions(), 180);
+        t.checkExpect(this.vc.totalInteractions(), 15);
+        t.checkExpect(this.vc1.totalInteractions(), 380);
         //totalLikes(); in ReplyComment
-        t.checkExpect(this.rc1.totalLikes(), 7);
-        t.checkExpect(this.rc2.totalLikes(), 4);
+        t.checkExpect(this.rc1.totalLikes(), 17);
+        t.checkExpect(this.rc2.totalLikes(), 21);
         //isCommentByAuthor(User author) in ReplyComment
         t.checkExpect(this.rc1.isCommentByAuthor(u1), false);
-        t.checkExpect(this.rc2.isCommentByAuthor(u1), true);
+        t.checkExpect(this.rc2.isCommentByAuthor(u1), false);
+        t.checkExpect(this.rc3.isCommentByAuthor(u1), true);
+        t.checkExpect(this.rc4.isCommentByAuthor(u1), true);
         //unrollCommentThread(); in ReplyComment
-        t.checkExpect(this.rc1.unrollCommentThread(), "\n" + replyTo + "\n" + 
-        u2.username + "\n" + 
-        7 + " likes" + "\n" + 
-        "Yeah, I agree!" + "\n";);
-        t.checkExpect(this.rc2.unrollCommentThread(), "\n" + replyTo + "\n" + 
-        u1.username + "\n" + 
-        4 + " likes" + "\n" + 
-        "Thanks for acknowledgment!" + "\n";);
+        t.checkExpect(this.rc1.unrollCommentThread(), rcans1);
+        t.checkExpect(this.rc2.unrollCommentThread(), rcans2);
     }
 }
