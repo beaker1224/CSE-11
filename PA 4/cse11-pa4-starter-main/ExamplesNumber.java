@@ -77,10 +77,14 @@ public int denominator(){
     return this.d;
 }
 public Number add(Number other){
+    if(other.numerator() != 0){
         int commom = this.denominator() * other.denominator();
         int thisn = this.numerator() * other.denominator();
         int othern = this.denominator() * other.numerator();
         return new Fraction((thisn + othern), commom);
+    }else{
+        return new Fraction(this.numerator(), this.denominator());
+    }
 }
 public Number multiply(Number other){
         int nn = this.numerator() * other.numerator();
