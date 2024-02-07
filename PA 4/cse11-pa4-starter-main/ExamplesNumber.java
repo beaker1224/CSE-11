@@ -34,7 +34,13 @@ public Number add(Number other){
     }
 }
 public Number multiply(Number other){
-    return new WholeInteger(this.numerator()/this.denominator() * other.numerator()/other.denominator());
+    if(this.denominator() == other.denominator()){
+        return new WholeInteger(this.numerator()/this.denominator() * other.numerator()/other.denominator());
+    }else{
+        int n = this.numerator() * other.numerator();
+        int d = this.denominator() * other.denominator();
+        return new Fraction(n, d); 
+    }
 }
 public Number getMax(Number other){
     int thisn = this.numerator() * other.denominator();
