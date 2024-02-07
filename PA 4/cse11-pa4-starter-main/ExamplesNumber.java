@@ -24,7 +24,14 @@ public int denominator(){
     return 1;
 }
 public Number add(Number other){
-    return new WholeInteger(this.numerator()/this.denominator() + other.numerator()/other.denominator());
+    if(this.denominator() == other.denominator()){
+        return new WholeInteger(this.numerator()/this.denominator() + other.numerator()/other.denominator());
+    }else{
+        int commom = this.denominator() * other.denominator();
+        int thisn = this.numerator() * other.denominator();
+        int othern = this.denominator() * other.numerator();
+        return new Fraction((thisn + othern), commom);
+    }
 }
 public Number multiply(Number other){
     return new WholeInteger(this.numerator()/this.denominator() * other.numerator()/other.denominator());
