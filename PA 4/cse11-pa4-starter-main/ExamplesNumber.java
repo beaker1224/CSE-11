@@ -37,9 +37,9 @@ public Number multiply(Number other){
     if(this.denominator() == other.denominator()){
         return new WholeInteger(this.numerator()/this.denominator() * other.numerator()/other.denominator());
     }else{
-        int n = this.numerator() * other.numerator();
-        int d = this.denominator() * other.denominator();
-        return new Fraction(n, d); 
+        int nn = this.numerator() * other.numerator();
+        int dd = this.denominator() * other.denominator();
+        return new Fraction(nn, dd); 
     }
 }
 public Number getMax(Number other){
@@ -77,23 +77,15 @@ public int denominator(){
     return this.d;
 }
 public Number add(Number other){
-    if(this.denominator() == other.denominator()){
-        return new WholeInteger(this.numerator()/this.denominator() + other.numerator()/other.denominator());
-    }else{
         int commom = this.denominator() * other.denominator();
         int thisn = this.numerator() * other.denominator();
         int othern = this.denominator() * other.numerator();
         return new Fraction((thisn + othern), commom);
-    }
 }
 public Number multiply(Number other){
-    if(this.denominator() == other.denominator()){
-        return new WholeInteger(this.numerator()/this.denominator() * other.numerator()/other.denominator());
-    }else{
-        int n = this.numerator() * other.numerator();
-        int d = this.denominator() * other.denominator();
-        return new Fraction(n, d); 
-    }
+        int nn = this.numerator() * other.numerator();
+        int dd = this.denominator() * other.denominator();
+        return new Fraction(nn, dd); 
 }
 public Number getMax(Number other){
     int thisn = this.numerator() * other.denominator();
