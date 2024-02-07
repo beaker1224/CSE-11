@@ -79,7 +79,11 @@ public Number add(Number other){
     int n2 = this.denominator() * other.numerator();
     int nn = n1 + n2;
     int dd = this.denominator() * other.denominator();
-    return new Fraction(nn, dd);
+    if(nn % dd == 0){
+        return new WholeInteger(nn/dd);
+    }else{
+        return new Fraction(nn, dd); 
+    }
 }
 public Number multiply(Number other){
         int nn = this.numerator() * other.numerator();
