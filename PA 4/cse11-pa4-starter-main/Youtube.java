@@ -33,17 +33,14 @@ VideoComment(String text, int likes, int replies, User author){
     public boolean isCommentByAuthor(User author){
         return this.author.username.equals(author.username);
     }
-
     public int totalLikes(){
         return this.likes;
     }
-
     public String unrollCommentThread(){
         return author.username + "\n" +
         this.likes + " likes" + "; " + this.replies + " replies" + "\n" +
         this.text + "\n";
     }
-
     public int totalInteractions(){
         return this.replies + this.likes;
     }
