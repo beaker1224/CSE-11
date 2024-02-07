@@ -43,8 +43,8 @@ public Number multiply(Number other){
     }
 }
 public Number getMax(Number other){
-    double n1 = this.numerator()/this.denominator();
-    double n2 = other.numerator()/other.denominator();
+    double n1 = (double) this.numerator()/this.denominator();
+    double n2 = (double) other.numerator()/other.denominator();
     if(n1 >= n2){
         return this;
     }else{
@@ -75,23 +75,24 @@ public int denominator(){
     return this.d;
 }
 public Number add(Number other){
-    if(other.numerator() != 0){
-        int commom = this.denominator() * other.denominator();
-        int thisn = this.numerator() * other.denominator();
-        int othern = this.denominator() * other.numerator();
-        return new Fraction((thisn + othern), commom);
-    }else{
-        return new Fraction(this.numerator(), this.denominator());
-    }
+    int n1 = this.numerator() * other.denominator();
+    int n2 = this.denominator() * other.numerator();
+    int nn = n1 + n2;
+    int dd = this.denominator() * other.denominator();
+    return new Fraction(nn, dd);
 }
 public Number multiply(Number other){
         int nn = this.numerator() * other.numerator();
         int dd = this.denominator() * other.denominator();
-        return new Fraction(nn, dd); 
+        if(nn % dd == 0){
+            return new WholeInteger(nn/dd);
+        }else{
+            return new Fraction(nn, dd); 
+        }
 }
 public Number getMax(Number other){
-    double n1 = this.numerator()/this.denominator();
-    double n2 = other.numerator()/other.denominator();
+    double n1 = (double) this.numerator()/this.denominator();
+    double n2 = (double) other.numerator()/other.denominator();
     if(n1 >= n2){
         return this;
     }else{
@@ -117,6 +118,8 @@ class ExamplesNumber{
     Number fans3 = new Fraction(5,10);//0.5
     Number fans4 = new Fraction(7,10);//7/10
     Number fans5 = new Fraction(2,7);//2/7
+    Number fans6 = fans5.getMax(fans4);
+    Number fans7 = new Fraction(fans6.numerator(), fans6.denominator());
     void testNumbers(Tester t){
         //Whole number testing
         t.checkExpect(this.ians1.numerator(), 20);
