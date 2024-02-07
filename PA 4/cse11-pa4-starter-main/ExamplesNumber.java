@@ -77,15 +77,23 @@ public int denominator(){
     return this.d;
 }
 public Number add(Number other){
-    int commom = this.denominator() * other.denominator();
-    int thisn = this.numerator() * other.denominator();
-    int othern = this.denominator() * other.numerator();
-    return new Fraction((thisn + othern), commom);
+    if(this.denominator() == other.denominator()){
+        return new WholeInteger(this.numerator()/this.denominator() + other.numerator()/other.denominator());
+    }else{
+        int commom = this.denominator() * other.denominator();
+        int thisn = this.numerator() * other.denominator();
+        int othern = this.denominator() * other.numerator();
+        return new Fraction((thisn + othern), commom);
+    }
 }
 public Number multiply(Number other){
-    int n = this.numerator() * other.numerator();
-    int d = this.denominator() * other.denominator();
-    return new Fraction(n, d);
+    if(this.denominator() == other.denominator()){
+        return new WholeInteger(this.numerator()/this.denominator() * other.numerator()/other.denominator());
+    }else{
+        int n = this.numerator() * other.numerator();
+        int d = this.denominator() * other.denominator();
+        return new Fraction(n, d); 
+    }
 }
 public Number getMax(Number other){
     int thisn = this.numerator() * other.denominator();
