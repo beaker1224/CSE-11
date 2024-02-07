@@ -67,7 +67,7 @@ public int totalLikes(){
     return this.likes + this.replyTo.totalLikes();
 }
 public String unrollCommentThread(){
-    return replyTo + "\n" + 
+    return replyTo.unrollCommentThread() + 
     this.author.username + "\n" + 
     this.likes + " likes" + "\n" + 
     this.text + "\n";
@@ -121,7 +121,15 @@ class Youtube{
         t.checkExpect(this.rc3.isCommentByAuthor(u1), true);
         t.checkExpect(this.rc4.isCommentByAuthor(u1), true);
         //unrollCommentThread(); in ReplyComment
-        t.checkExpect(this.rc1.unrollCommentThread(), rcans1);
-        t.checkExpect(this.rc2.unrollCommentThread(), rcans2);
+        t.checkExpect(this.rc1.unrollCommentThread(), u1.username + "\n" +
+        10 + " likes" + "; " + 5 + " replies" + "\n" +
+        "This is a great example to use the Tester Library!" + "\n" + u2.username + "\n" + 
+        7 + " likes" + "\n" + 
+        "Yeah, I agree!" + "\n");
+        t.checkExpect(this.rc2.unrollCommentThread(), u1.username + "\n" +
+        10 + " likes" + "; " + 5 + " replies" + "\n" +
+        "This is a great example to use the Tester Library!" + "\n" + u1.username + "\n" + 
+        4 + " likes" + "\n" + 
+        "Thanks for acknowledgment!" + "\n");
     }
 }
