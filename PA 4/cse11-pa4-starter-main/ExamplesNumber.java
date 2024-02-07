@@ -47,10 +47,10 @@ public Number getMax(Number other){
     int othern = this.denominator() * other.numerator();
     if(thisn >= othern){
         return new WholeInteger(this.numerator());
-    }else if(this.denominator() != other.denominator()){
-        return new Fraction(other.numerator(), other.denominator());
-    }else{
+    }else if(this.denominator() == other.denominator()){
         return new WholeInteger(other.numerator());
+    }else{
+        return new Fraction(other.numerator(), other.denominator());
     }
 }
 public String toString(){
