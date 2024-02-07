@@ -90,17 +90,12 @@ public Number multiply(Number other){
         return new Fraction(nn, dd); 
 }
 public Number getMax(Number other){
-    int thisn = this.numerator() * other.denominator();
-    int othern = this.denominator() * other.numerator();
-    if(thisn >= othern){
-        return new Fraction(this.numerator(), this.denominator());    
+    double n1 = this.numerator()/this.denominator();
+    double n2 = other.numerator()/other.denominator();
+    if(n1 >= n2){
+        return this;
     }else{
-        if(other.denominator() == 1){
-            return new WholeInteger(other.numerator());
-        }else{
-            return new Fraction(other.numerator(), other.denominator());
-        }
-        
+        return other;
     }
 }
 public String toString(){
