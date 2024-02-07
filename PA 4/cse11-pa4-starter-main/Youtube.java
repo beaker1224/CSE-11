@@ -128,7 +128,9 @@ class Youtube{
         "Yeah, I agree!" + "\n");
         t.checkExpect(this.rc2.unrollCommentThread(), u1.username + "\n" +
         10 + " likes" + "; " + 5 + " replies" + "\n" +
-        "This is a great example to use the Tester Library!" + "\n" + u1.username + "\n" + 
+        "This is a great example to use the Tester Library!" + "\n" + u2.username + "\n" + 
+        7 + " likes" + "\n" + 
+        "Yeah, I agree!" + "\n" + u1.username + "\n" + 
         4 + " likes" + "\n" + 
         "Thanks for acknowledgment!" + "\n");
     }
