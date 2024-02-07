@@ -123,5 +123,15 @@ class ExamplesNumber{
         t.checkExpect(this.ians2.getMax(fans4).toString(), "13");
         t.checkExpect(this.ians5.getMax(fans5).toString(), "2/7");
     }
+
+
+//Exploration
+    double ex1 = 0.1 + 0.2 + 0.3;
+    double ex2 = 0.1 + (0.2 + 0.3);
+    Number pt1 = new Fraction(1, 10);
+    Number pt2 = new Fraction(2, 10);
+    Number pt3 = new Fraction(3, 10);
+    String ex3 = pt3.add(pt2.add(pt1)).toString();
+    String ex4 = pt1.add(pt2.add(pt3)).toString();
 }
 
