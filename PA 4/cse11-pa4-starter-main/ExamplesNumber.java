@@ -97,6 +97,8 @@ public Number multiply(Number other){
 public Number getMax(Number other){
     double n1 = (double) this.numerator()/this.denominator();
     double n2 = (double) other.numerator()/other.denominator();
+    System.out.println(n1);
+    System.out.println(n2);
     if(n1 >= n2){
         return this;
     }else{
