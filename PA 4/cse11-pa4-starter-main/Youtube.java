@@ -39,7 +39,7 @@ VideoComment(String text, int likes, int replies, User author){
     }
 
     public String unrollCommentThread(){
-        return "\n" + author.username + "\n" +
+        return author.username + "\n" +
         this.likes + " likes" + "; " + this.replies + " replies" + "\n" +
         this.text + "\n";
     }
@@ -70,7 +70,7 @@ public int totalLikes(){
     return this.likes + this.replyTo.totalLikes();
 }
 public String unrollCommentThread(){
-    return "\n" + replyTo + "\n" + 
+    return replyTo + "\n" + 
     this.author.username + "\n" + 
     this.likes + " likes" + "\n" + 
     this.text + "\n";
@@ -106,10 +106,10 @@ class Youtube{
         t.checkExpect(this.vc.isCommentByAuthor(u1), true);
         t.checkExpect(this.vc1.isCommentByAuthor(u1), false);
         //unrollCommentThread(); in VideoComment
-        t.checkExpect(this.vc.unrollCommentThread(), "\n" + u1.username + "\n" +
+        t.checkExpect(this.vc.unrollCommentThread(), u1.username + "\n" +
         10 + " likes" + "; " + 5 + " replies" + "\n" +
         "This is a great example to use the Tester Library!" + "\n");
-        t.checkExpect(this.vc1.unrollCommentThread(), "\n" + u3.username + "\n" +
+        t.checkExpect(this.vc1.unrollCommentThread(), u3.username + "\n" +
         200 + " likes" + "; " + 180 + " replies" + "\n" +
         "You know that it is not a good example right?" + "\n");
         //totalInteractions() in VideoComment
