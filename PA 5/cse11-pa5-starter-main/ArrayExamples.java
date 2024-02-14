@@ -82,7 +82,72 @@ class ArrayExamples{
     t.checkExpect(allOutsideRange(input2, 5.0, 5.0), false);
     t.checkExpect(allOutsideRange(input3, 3, 10), true);
   }
+//Method 4 -------------------------------------------------------
+  Pair addMulti(int[] input){
+    int a = 0;
+    int b = 1;
+    for(int i = 0; i < input.length; i++){
+      a = a + input[i];
+      b = b * input[i];
+    }
+    return new Pair(a, b);
+  }
+//test -----------------------------------------------------------
+  void testaddMulti(Tester t){
+    int[] input1 = {0,2,4};
+    int[] input2 = {1,5,7,3};
+    int[] input3 = {3,4,1};
+
+    t.checkExpect(addMulti(input1).a, 6);
+    t.checkExpect(addMulti(input1).b, 0);
+    t.checkExpect(addMulti(input2).a, 16);
+    t.checkExpect(addMulti(input2).b, 105);
+    t.checkExpect(addMulti(input3).a, 8);
+    t.checkExpect(addMulti(input3).b, 12);
+  }
+//Method -----------------------------------------------------------
+  String lastSortedString(String[] input){
+    String last = input[0];
+    if(input.length > 1){
+      for(int i = 0; i < input.length - 1; i++){
+        if(input[i + 1].compareTo(input[i]) > 0){
+          last = input[i + 1];
+        }
+      }
+      return last;
+    }
+    return input[0];
+  }
+//test --------------------------------------------------------------
+  void testlastSortedString(Tester t){
+    String[] input1 = {"hello"};
+    String[] input2 = {"hello", "world"};
+    String[] input3 = {"apple", "banana", "Apple"};
+    
+    t.checkExpect(lastSortedString(input1), "hello");
+    t.checkExpect(lastSortedString(input2), "world");
+    t.checkExpect(lastSortedString(input3), "banana");
+  }
+//Method -----------------------------------------------------------
+  int lookup(String[] keys, int[] values, String key){
+    int position = -1;
+    for(int i = 0; i < keys.length - 1; i++){
+      if(keys[i].compareTo(key) == 0){
+        if(i > values.length){
+          return -1;
+        }
+        position = values[i];
+      }
+    }
+    return position;
+  }
+//test ------------------------------------------------------------
+  void testlookup(Tester t){
+    String[] keys1 = {"UCSD", "UCLA", "UCI", "Stanford"};
+    int[] values1 = {36000, 44900, 33467};
+
+    t.checkExpect(lookup(keys1, values1, "UCSD"), 36000);
+    t.checkExpect(lookup(keys1, values1, "UCI"), 33467);
+    t.checkExpect(lookup(keys1, values1, "Stanford"), -1);
+  }
 }
-
-
-
