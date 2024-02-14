@@ -39,8 +39,8 @@ class ArrayExamples{
   boolean logicalOr(boolean[] TOF){
     if(TOF.length == 0){return false;}
 
-    for(boolean b: TOF){
-      if(!b){
+    for( int i = 0; i < TOF.length; i++){
+      if(!TOF[i]){
         return false;
       }
     }
