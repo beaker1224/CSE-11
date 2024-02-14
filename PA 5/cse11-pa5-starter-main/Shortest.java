@@ -1,14 +1,21 @@
 class Shortest {
     public static void main(String[] args){
-        if(args.length > 0){
-            int position = 0;
-            for(int i = 0; i < args.length - 1; i++){
-                if(args[position].length() > args[i + 1].length()){
-                    position = i + 1;
-                }
+        if(args.length == 0){return;}
+
+        int min = args[0].length();
+        String ans = args[0];
+        for(String s: args){
+            if(s.length() < min){
+                ans = s;
+                min = s.length();
             }
-            System.out.println(args[position]);
         }
-        System.out.println("");
+
+        System.out.println(ans);
     }
+
+
+
+
+    
 }

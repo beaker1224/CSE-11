@@ -37,18 +37,15 @@ class ArrayExamples{
   }
 //Method 2 ---------------------------------------------------------- 
   boolean logicalOr(boolean[] TOF){
-    if (TOF.length > 0){
-      for (int i = 0; i < TOF.length; i++){
-        if (TOF[i] == true){
-          if(i == TOF.length - 1){
-            return true;
-          }
-          continue;
-        }
+    if(TOF.length == 0){return false;}
+
+    for(boolean b: TOF){
+      if(!b){
         return false;
       }
     }
-      return false;
+
+    return true;
   }
 //test --------------------------------------------------------------
   void testlogicalOr(Tester t){
@@ -131,11 +128,8 @@ class ArrayExamples{
 //Method -----------------------------------------------------------
   int lookup(String[] keys, int[] values, String key){
     int position = -1;
-    for(int i = 0; i < keys.length - 1; i++){
-      if(keys[i].compareTo(key) == 0){
-        if(i > values.length){
-          return -1;
-        }
+    for(int i = 0; i < keys.length; i++){
+      if(keys[i].equals(key)){
         position = values[i];
       }
     }
@@ -143,7 +137,7 @@ class ArrayExamples{
   }
 //test ------------------------------------------------------------
   void testlookup(Tester t){
-    String[] keys1 = {"UCSD", "UCLA", "UCI", "Stanford"};
+    String[] keys1 = {"UCSD", "UCLA", "UCI"};
     int[] values1 = {36000, 44900, 33467};
 
     t.checkExpect(lookup(keys1, values1, "UCSD"), 36000);
