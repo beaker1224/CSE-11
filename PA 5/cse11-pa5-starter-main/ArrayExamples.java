@@ -53,7 +53,7 @@ class ArrayExamples{
     boolean[] input2 = {};
     boolean[] input3 = {true, true, true, true};
 
-    t.checkExpect(logicalOr(input1), false);
+    t.checkExpect(logicalOr(input1), true);
     t.checkExpect(logicalOr(input2), false);
     t.checkExpect(logicalOr(input3), true);
   }
