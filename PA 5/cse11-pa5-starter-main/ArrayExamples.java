@@ -40,7 +40,7 @@ class ArrayExamples{
     if(TOF.length == 0){return false;}
 
     for( int i = 0; i < TOF.length; i++){
-      if(!TOF[i]){
+      if(TOF[i] == false){
         return false;
       }
     }
