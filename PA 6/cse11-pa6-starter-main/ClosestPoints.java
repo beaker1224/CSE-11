@@ -43,12 +43,10 @@ class ClosestPoints{
     if(position == 1){
       System.out.println("The closest points are (" + p1.x + ", " + p1.y 
       + ") and (" + p3.x + ", " + p3.y + ") at distance " + distanceBetween);
-      System.out.println(1);
     }
     if(position == 2){
       System.out.println("The closest points are (" + p2.x + ", " + p2.y 
       + ") and (" + p3.x + ", " + p3.y + ") at distance " + distanceBetween);
-      System.out.println(2);
     }
     
 
