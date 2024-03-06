@@ -17,14 +17,14 @@ interface Query {
 }
 
 class ContainsQuery implements Query {
-  String Query;
+  String query;
 
-  ContainsQuery(String Query) {
-    this.Query = Query;
+  ContainsQuery(String query) {
+    this.query = query;
   }
 
   public boolean matches(String s) {
-    if (s.contains(this.Query)) {
+    if (s.contains(this.query)) {
       return true;
     }
     return false;
