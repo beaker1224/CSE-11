@@ -1,6 +1,6 @@
 import java.nio.file.*;
 import java.io.IOException;
-
+import java.util.*;
 class FileHelper {
   static String[] getLines(String path) {
     try {
@@ -13,84 +13,141 @@ class FileHelper {
 }
 
 interface Query {
-  public boolean matches(String s);
+  boolean matches(String s);
 }
 
-class ContainsQuery implements Query {
-  String query;
-
-  ContainsQuery(String query) {
-    this.query = query;
-  }
-
-  public boolean matches(String s) {
-    if (s.contains(this.query)) {
-      return true;
-    }
-    return false;
-  }
-}
-
-class StringSearch implements Query {
+class StringSearch{
   public static void main(String[] args) throws IOException{
     //to get the contents
           String[] contents = Files.readString(Paths.get(args[0])).split("\n");
-          String[] output;
-
-          
-          public boolean matches(String s){
-            return;
-          }
-          static Query readQuery(String q){
-            
-          }
-    //Queries
-        int length, greater, less;
-        String contains, starts, ends, not;
+          ArrayList<String> output = new ArrayList<>();
 
     //to check if there the number of commands in the command line
         if(args.length == 1){
             for (String line : contents) {
                 System.out.println(line);
               }
-        }
+        }else if(args.length == 2){
+            String[] queryLine = args[1].split("&");
+            Query[] queries = new Query[queryLine.length];
+            
+            for(int i = 0; i < queryLine.length; i++){
+                queries[i] = readQuery(queryLine[i]);
+            }
 
-        if(args.length == 2){
-            String[] conditions = args[1].split("&");
-    //print test
-    /*for(String c:conditions){
-        System.out.println(c);
-    }*/
-    //print test ends
-            for(String s:conditions){
-                if(s.contains("length")){
-                  length = Integer.parseInt(s.substring(7));
+            for(int i = 0; i < contents.length; i ++){
+                boolean Allpassed = true;
+                for(int j = 0; j < queries.length; j++){
+                    Allpassed = Allpassed && queries[j].matches(contents[i]);
+                    }
+                if(Allpassed){
+                    output.add(contents[i]);
+                    System.out.println(contents[i]);
                 }
-                if(s.contains("greater")){
-                  greater = Integer.parseInt(s.substring(8));
-                }
-                if(s.contains("less")){
-                  less = Integer.parseInt(s.substring(5));
-                }
-                if(s.contains("contains")){
-    /*             ContainsQuery query = new ContainsQuery(s.substring(10, s.length() - 1));
-                    for (String line : contents) {
-                        if(query.matches(line)){
-                            System.out.println(line);
-                        }
-                    }*/    
-                }
-                if(s.contains("starts")){
-                  starts = s.substring(8);
-                }
-                if(s.contains("ends")){
-                  ends = s.substring(6);
-                }
-                if(s.contains("not")){
+            }
 
-                }
-              }
+          /*  for(String s:output){
+            System.out.println(output);
+            } */
+
 
         }//2 conditions if statement
       }// main method
+
+
+      static Query readQuery(String q){
+        if(q.startsWith("length=")){
+            return new LengthQuery(Integer.parseInt(q.substring(7)));
+        }
+        if(q.startsWith("greater=")){
+            return new GreaterQuery(Integer.parseInt(q.substring(8)));
+        } 
+        if(q.startsWith("less=")){
+            return new LessQuery(Integer.parseInt(q.substring(5)));
+        }
+        if(q.startsWith("contains=")){
+            return new ContainsQuery(q.substring(10, q.length() - 1));
+        }
+        if(q.startsWith("starts=")){
+            return new StartsQuery(q.substring(8, q.length() - 1));
+        }
+        if(q.startsWith("ends=")){
+            return new EndsQuery(q.substring(6, q.length() - 1));
+        }
+        if(q.startsWith("not")){
+            return new NotQuery(q.substring(4, q.length() - 1));
+        }
+        return null;//then it fails
+      }
 }// class
+
+class LengthQuery implements Query{
+    int n;
+    LengthQuery(int n){
+        this.n = n;
+    }
+
+    public boolean matches(String s){
+        return n == s.length();
+    }
+}
+class GreaterQuery implements Query{
+    int n;
+    GreaterQuery(int n){
+        this.n = n;
+    }
+
+    public boolean matches(String s){
+        return s.length() > n;
+    }
+}
+class LessQuery implements Query{
+    int n;
+    LessQuery(int n){
+        this.n = n;
+    }
+
+    public boolean matches(String s){
+        return s.length() < n;
+    }
+}
+class ContainsQuery implements Query {
+    String query;
+    ContainsQuery(String query) {
+      this.query = query;
+    }
+  
+    public boolean matches(String s) {
+      return s.contains(this.query);
+  }
+}
+class StartsQuery implements Query{
+    String query;
+    StartsQuery(String query) {
+      this.query = query;
+    }
+  
+    public boolean matches(String s) {
+      return s.startsWith(this.query);
+  }
+}
+class EndsQuery implements Query{
+    String query;
+    EndsQuery(String query) {
+      this.query = query;
+    }
+  
+    public boolean matches(String s) {
+      return s.endsWith(this.query);
+  }
+}
+class NotQuery implements Query{
+    String query;
+    NotQuery(String query) {
+      this.query = query;
+    }
+  
+    public boolean matches(String s) {
+      return !(StringSearch.readQuery(query).matches(s));
+  }
+}
