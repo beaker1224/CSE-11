@@ -48,10 +48,71 @@ public class BasketTest {
 	@Test
 	public void addedHasCount1() {
 		Basket basketToTest = makeBasket();
-
 		Item i = new Item("Shampoo", 5);
 		basketToTest.addToBasket(i);
 		assertEquals(1, basketToTest.count());
 	}
-
+	@Test
+	public void  addDuplicate(){
+		Basket basketToTest = makeBasket();
+		Item d1 = new Item("meat", 10);
+		Item d2 = new Item("meat", 10);
+		basketToTest.addToBasket(d1);
+		basketToTest.addToBasket(d2);
+		assertEquals(2, basketToTest.count());
+		basketToTest.addToBasket(d1);
+		basketToTest.addToBasket(d2);
+		assertEquals(4, basketToTest.count());
+		assertEquals(2, basketToTest.countItem(d1));
+		assertEquals(2, basketToTest.countItem(d2));
+	}
+	@Test
+	public void addMultiple(){
+		Basket basketToTest = makeBasket();
+		Item d1 = new Item("sugar", 50);
+		Item d2 = new Item("egg white", 2);
+		Item d3 = new Item("unsalted butter", 25);
+		Item d4 = new Item("flavor", 75);
+		Item d5 = new Item("salt", 2);
+		Item d6 = new Item("baking powder", 2);
+		basketToTest.addToBasket(d1);		
+		basketToTest.addToBasket(d2);		
+		basketToTest.addToBasket(d3);		
+		basketToTest.addToBasket(d4);		
+		basketToTest.addToBasket(d5);		
+		basketToTest.addToBasket(d6);		
+		assertEquals(6, basketToTest.count());
+		assertEquals(1, basketToTest.countItem(d6));
+	}
+	@Test
+	public void addRemoveSame(){
+		Basket basketToTest = makeBasket();
+		Item i = new Item("egg", 20);
+		basketToTest.addToBasket(i);
+		basketToTest.addToBasket(i);
+		basketToTest.removeFromBasket(i);
+		assertEquals(1, basketToTest.countItem(i));
+	}
+	@Test
+	public void checkEmpty(){
+		Basket basketToTest = makeBasket();
+		Item i = new Item("book", 50);
+		basketToTest.addToBasket(i);
+		assertEquals(1, basketToTest.count());
+		basketToTest.empty();
+		assertEquals(0, basketToTest.count());
+	}
+	@Test
+	public void  removeAll(){
+		Basket basketToTest = makeBasket();
+		Item d1 = new Item("meat", 10);
+		Item d2 = new Item("meat", 10);
+		basketToTest.addToBasket(d1);
+		basketToTest.addToBasket(d2);
+		basketToTest.addToBasket(d1);
+		basketToTest.addToBasket(d2);
+		basketToTest.removeAllFromBasket(d2);
+		assertEquals(2, basketToTest.countItem(d1));
+		assertEquals(0, basketToTest.countItem(d2));
+	}
 }
