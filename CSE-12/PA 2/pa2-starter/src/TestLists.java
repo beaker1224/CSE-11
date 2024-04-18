@@ -1,4 +1,3 @@
-
 import static org.junit.Assert.*;
 
 import java.util.Arrays;
@@ -56,4 +55,89 @@ public class TestLists {
 		assertArrayEquals(string_input, string_s.toArray());
 	}
 
+	@Test
+	public void chaffAlwaysChoosesFirstArrayGL() {
+		String[] input = {"benzene","goat","is","starboy"};
+		ArrayGL<String> strAGL = new ArrayGL<>(input);
+		strAGL.chooseAll(new LongWordChooser());
+		assertEquals(true, strAGL.size == 2);
+	}
+
+	@Test
+	public void chaffChooseAllFailsIfLastNotChosenLinkedGL() {
+		String[] input = {"benzene","goat","is","starboy"};
+		String[] exp = {"benzene", "starboy"};
+		MyList<String> strAGL = new LinkedGL<>(input);
+		strAGL.chooseAll(new LongWordChooser());
+		assertArrayEquals(strAGL.toArray(), exp);
+	}
+
+	@Test
+	public void chaffDoWhileToArrayLinkedGL() {
+		String[] str = {};
+		LinkedGL<String> s = new LinkedGL<>(str);
+		assertEquals(true, Arrays.equals(str, s.toArray()));
+	}
+
+	@Test
+	public void chaffDoWhileTransformArrayGL() {
+		String[] s1 = {"a","b","c","d"};
+		String[] s2 = {"A", "B", "C", "D"};
+		MyList<String> s = new ArrayGL<>(s1);
+		MyTransformer mt = new UpperCaseTransformer();
+		s.transformAll(mt);
+		assertArrayEquals(s.toArray(), s2);
+	}
+
+	@Test
+	public void chaffFixedSizeConstructorLinkedGL() {
+		String[] s = new String[50];
+		for(int i = 0; i < 50; i++){s[i] = "sleep";}
+		MyList<String> str = new LinkedGL<>(s);
+		assertArrayEquals(s, str.toArray());
+	}
+
+	@Test
+	public void chaffIncludeNullToArrayArrayGL() {
+		String[] str = {null, null, null,"d"};
+		String[] exp = {"d"};
+		MyList<String> s = new ArrayGL<>(str);
+		s.chooseAll(new NoCc());
+		assertArrayEquals(exp, s.toArray());
+	}
+
+	@Test
+	public void chaffIncorrectTransformBoundsLinkedGL() {
+		String[] s1 = {"a","b","c","d"};
+		String[] s2 = {"A", "B", "C", "D"};
+		MyList<String> s = new LinkedGL<>(s1);
+		MyTransformer mt = new UpperCaseTransformer();
+		s.transformAll(mt);
+		assertArrayEquals(s.toArray(), s2);
+	}
+
+	@Test
+	public void chaffIsEmptyReturnsFalseSizeGreaterThan3() {
+		String[] str = {"","","","","","",""};
+		MyList<String> s = new ArrayGL<>(str);
+		MyList<String> l = new LinkedGL<>(str);
+		assertEquals(false, l.isEmpty());
+		assertEquals(false, s.isEmpty());
+	}
+
+
+	@Test
+	public void chaffIsEmptyReturnsTrueIfSizeGreateThan0ArrayGL() {
+		String[] input = {"benzene","goat","is","starboy"};
+		MyList<String> strAGL = new ArrayGL<>(input);
+		assertEquals(false, strAGL.isEmpty());
+	}
+
+
+	@Test
+	public void chaffReturnNewArrayArrayGL() {
+		String[] input = {"benzene","goat","is","starboy"};
+		MyList<String> in = new ArrayGL<>(input);
+		assertArrayEquals(input, in.toArray());
+	}
 }
