@@ -18,7 +18,7 @@ public class LinkedGL<E> implements MyList<E> {
 
     public LinkedGL(E[] contents) {
         this.front = new Node(null, null);
-        Node current = this.front;
+        Node current = this.front; // very IMPORTANT, this.front should not be in the i loop
         for(int i = 0; i < contents.length; i++){
             current.next = new Node(contents[i], null);
             current = current.next; // this is the update on the current node
