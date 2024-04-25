@@ -38,10 +38,75 @@ public class TestSolvers {
 	 */
 	
 	@Test
-	public void dummyTest() {
-		assertEquals("TODO: Remove this dummy test after writing your own tests.", "This is a dummy test.");
+	public void diagonalmoves() {
+		Maze m1 = new Maze(new String[]{
+			"_S_",
+			"_#_",
+			"F__"
+		});
+		SearchWorklist q1 = new StackWorklist();
+		MazeSolver.solve(m1, q1);
+		ArrayList<Square> solution = m1.storePath();
+		String[] act = m1.showSolution(solution);
+		String[] exp = new String[]{
+			"*S_",
+			"*#_",
+			"F__"
+		};
+		assertArrayEquals(act,exp);
 	}
 	
+	@Test
+	public void stopearly() {
+		Maze m1 = new Maze(new String[]{
+			"__S",
+			"_#_",
+			"F__"
+		});
+		SearchWorklist q1 = new QueueWorklist();
+		MazeSolver.solve(m1, q1);
+		ArrayList<Square> solution = m1.storePath();
+		String[] act = m1.showSolution(solution);
+		String[] exp = new String[]{
+			"__S",
+			"_#*",
+			"F**"
+		};
+		assertArrayEquals(act,exp);
+	}
+	@Test
+	public void difforder() {
+		Maze m1 = new Maze(new String[]{
+			"___",
+			"S#_",
+			"F__"
+		});
+		String[] exp = new String[]{
+			"___",
+			"S#_",
+			"F__"
+		};
+		checkMaze(new StackWorklist(), m1, exp);
+
+	}
+	@Test
+	public void test() {
+		Maze m1 = new Maze(new String[]{
+			"__S",
+			"_#_",
+			"F__"
+		});
+		SearchWorklist q1 = new StackWorklist();
+		MazeSolver.solve(m1, q1);
+		ArrayList<Square> solution = m1.storePath();
+		String[] act = m1.showSolution(solution);
+		String[] exp = new String[]{
+			"**S",
+			"*#_",
+			"F__"
+		};
+		assertArrayEquals(act,exp);
+	}
 }
 
 
