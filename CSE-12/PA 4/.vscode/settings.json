@@ -1,0 +1,6 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "cse12-pa4-runtime-main/pa4-starter/pa4-student/src/mysteries.jar"
+    ]
+}

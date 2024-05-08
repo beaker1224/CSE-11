@@ -1,0 +1,5 @@
+{
+    "java.project.referencedLibraries": [
+        "pa4-starter/pa4-student/src/**/*.jar"
+    ]
+}
