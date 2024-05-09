@@ -1,5 +1,7 @@
 import static org.junit.Assert.*;
 
+import java.util.Arrays;
+
 import org.junit.Test;
 
 /**
@@ -23,6 +25,110 @@ class CopyFirstElementPartition implements Partitioner {
 }
 
 public class TestPartitionOracle {
+	
+	@Test
+	public void testIsvalid1(){
+		
+		String[] bef = {"a","b","d","c"};
+		String[] aft = {"a","b","c","d"};
+		
+		assertNull(PartitionOracle.isValidPartitionResult(bef, 0, 4,0, aft));		
+	}
+	@Test
+	public void testIsvalid2(){
+		
+		String[] bef = {"dsfhji","a","b","d","c","dsfhji"};
+		String[] aft = {"dsfhji","a","b","c","d","dsfhji"};
+		
+		assertNull(PartitionOracle.isValidPartitionResult(bef, 1, 5, 4, aft));		
+	}
+	
+	@Test
+	public void testIsvalid3(){
+		
+		String[] bef = {"a","b","d","c","e"};
+		String[] aft = {"a","c","b","d","e"};
+		
+		assertNull(PartitionOracle.isValidPartitionResult(bef, 0, 5, 3, aft));		
+	}
+	
+	@Test
+	public void testIsvalid4(){
+		
+		String[] bef = {"A","A","A"};
+		String[] aft = {"A","A","A"};
+		
+		assertNull(PartitionOracle.isValidPartitionResult(bef, 0, 2, 1, aft));		
+	}
+	
+	@Test
+	public void testIsvalid5(){
+		
+		String[] bef = {"A","B","C"};
+		String[] aft = {"A","B","C"};
+		
+		assertNull(PartitionOracle.isValidPartitionResult(bef, 0, 3,2, aft));		
+	}
+	
+	@Test
+	public void testGenerateinput(){
+		int n = 10;
+		String[] test = PartitionOracle.generateInput(n);
+		assertEquals(n,test.length);	
+	}
+	
+	@Test
+	public void testGenerateinput2(){
+		int n = 100;
+		String[] test = PartitionOracle.generateInput(n);
+		assertEquals(n,test.length);
+	}
+	
+	
+	
+	@Test
+	public void FEpartition1(){
+		Partitioner p = new FirstElePivotPartitioner();
+		
+		CounterExample test= PartitionOracle.findCounterExample(p);
+		assertNull(test);
+	}
+	
+	@Test
+	public void FEpartition2(){
+		Partitioner p2 = new FirstElePivotPartitioner();
+		
+		CounterExample test= PartitionOracle.findCounterExample(p2);	
+		assertNull(test);
+	}
+	
+	@Test
+	public void CEpartition1(){
+		Partitioner p = new CentralPivotPartitioner();
+		
+		CounterExample test= PartitionOracle.findCounterExample(p);	
+		assertNull(test);
+	}
+	
+	@Test
+	public void CEpartition2(){
+		Partitioner p = new CentralPivotPartitioner();
+		
+		CounterExample test= PartitionOracle.findCounterExample(p);	
+		assertNull(test);
+	}
+	
+	@Test
+	public void CEpartition3(){
+		Partitioner p = new CentralPivotPartitioner();
+		
+		CounterExample test= PartitionOracle.findCounterExample(p);	
+		System.out.println(test);
+		assertNull(test);
+	}
+	
+	
+	
     @Test
     public void testCopyFirstElementPartition() {
         CounterExample ce = PartitionOracle.findCounterExample(new CopyFirstElementPartition());

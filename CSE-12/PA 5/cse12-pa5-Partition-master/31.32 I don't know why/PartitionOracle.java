@@ -36,85 +36,81 @@ public class PartitionOracle {
     // The three methods below are for you to fill in according to the PA writeup.
     // Feel free to make other helper methods as needed.
 
-/**
-error1 = Elements out of the range are modified
-error2 = Item before pivot too large
-error3 = Item after pivot too small
-error4 = Elements within do not match
-error5 = pivot is negative
- */
     public static String isValidPartitionResult(String[] before, int low, int high, int pivot, String[] after) {
-        String[] bFront = Arrays.copyOfRange(before, 0, low);
-        String[] bBack = Arrays.copyOfRange(before, high, before.length);
-        String[] aFront = Arrays.copyOfRange(after, 0, low);
-        String[] aBack = Arrays.copyOfRange(after, high, after.length);
-        String[] be = Arrays.copyOfRange(before, low, high);
-        String[] af = Arrays.copyOfRange(after, low, high);
-
-        String error1 = "Elements out of the range are modified";
-        String error2 = "Item before pivot too large";
-        String error3 = "Item after pivot too small";
-        String error4 = "Elements within do not match";
-        String error5 = "pivot is negative";
-        // compare the front and back, refer to error 1
-        if(!Arrays.equals(bFront, aFront) || !Arrays.equals(bBack, aBack)){
-            return error1;
-        }
-        // compare the elements within, refer to error 4
-        List<String> a = new ArrayList<>(Arrays.asList(af));
-        for(String i:be){
-            int index = a.indexOf(i);
-            if(index == -1){
-                return error4;
-            }else{
-                a.set(index, null);
-            }
-        }
-        //compare big or small, refer to error 2 and 3
-        String[] aFirstHalf = Arrays.copyOfRange(after, low, pivot);
-        String[] aSecondHalf = Arrays.copyOfRange(after, pivot, high);
-        int p = pivot - low;
-        if(p < 0 || p > high - low){return error5;}
-        for(String i:aFirstHalf){
-            if(i.compareTo(af[p]) > 0){
-                return error2;
-            }
-        }
-        for(String i:aSecondHalf){
-            if(i.compareTo(af[p]) < 0){
-                return error3;
-            }
-        }
-
-        return null; 
+    	
+    	String[] b1 = Arrays.copyOfRange(before, 0, low);  	
+    	String[] a1 = Arrays.copyOfRange(after, 0, low);
+    	String[] b2 = Arrays.copyOfRange(before, high, before.length);
+    	String[] a2 = Arrays.copyOfRange(after, high, after.length);
+    	
+        if((!Arrays.equals(b1, a1) || !Arrays.equals(b2, a2))) {
+    		return "Elements do not match";
+    	}
+    	
+    	String[] bef = Arrays.copyOfRange(before, low, high);
+    	String[] aft = Arrays.copyOfRange(after, low, high);
+    	
+    	
+    	List<String> c = new ArrayList<>(Arrays.asList(aft));
+    	
+    	for(String i:bef) {
+    		
+    		int index = c.indexOf(i);
+    		if(index == -1) {
+    			return "After array does not have the same elements";
+    		}
+    		else { 
+    			c.set(index,null);} 		
+    	}
+    	
+    	int real_pivot = pivot - low;
+    	for(int i =0; i < real_pivot; i++) {
+    		if (aft[i].compareTo(aft[real_pivot]) > 0){
+    			return "Index before pivot too large";			
+    		}		
+    	}
+    	
+    	if(pivot < 0) {return "negative pivot";}
+    	for(int i = pivot; i < aft.length; i++) {
+    		if (aft[i].compareTo(aft[real_pivot]) < 0){
+    			return "Index after pivot too small";			
+    		}   		
+    	}
+    	
+        return null;
     }
 
-    /**
-    * Generate random input of A to Z with string length of n
-    */
     public static String[] generateInput(int n) {
-        Random r = new Random();
-        String[] s = new String[n];
-
-        for (int i = 0; i < n; i++){
-            s[i] = Character.toString((char)(r.nextInt(26) + 65));
-        }
-
-        return s;
+    	Random r = new Random();
+    	
+    	String[] result = new String[n];
+    	for ( int i = 0; i < result.length; i++) {
+  	
+    	int asciiForACapLetter = r.nextInt(26) + 65;  // Generates a random letter from A - Z
+    	String s = Character.toString((char)(asciiForACapLetter));
+    	result[i] = s;
+    	}
+    	
+        return result;
     }
 
     public static CounterExample findCounterExample(Partitioner p) {
-        int low = 1;
-        int high = 6;
-        String[] before = generateInput(7);
-        String[] after = Arrays.copyOf(before, before.length);
-        int pivot = p.partition(after, low, high);
-        String reason = PartitionOracle.isValidPartitionResult(before, low, high, pivot, after);
-        if(reason == null){
-            return null;
-        }else{
-            return new CounterExample(before, low, high, pivot, after, reason);
-        }
-    }
+		int low = 1;
+		int high = 4;
+		
+		String[] before = PartitionOracle.generateInput(5);
+		String[] after = Arrays.copyOf(before, before.length);
+		int pivot = p.partition(after, low, high);
+		
+		String reason = PartitionOracle.isValidPartitionResult(before, low, high, pivot, after);
+		if( reason == null) {
+			return null;
+		}
+		else {		
+			return new CounterExample(before,low, high, pivot, after, reason);
+		}
+		
+				
+	}
 
 }

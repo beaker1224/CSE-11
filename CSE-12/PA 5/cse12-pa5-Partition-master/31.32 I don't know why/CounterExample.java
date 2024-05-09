@@ -13,7 +13,7 @@ class CounterExample {
 		this.low = low;
 		this.high = high;
 	}
-
+	
 	public String toString() {
 		return this.reason + ": " + Arrays.toString(this.before) + " " + this.low + " to " + this.high +
 				" -> " + this.pivot + " in " + Arrays.toString(after);
