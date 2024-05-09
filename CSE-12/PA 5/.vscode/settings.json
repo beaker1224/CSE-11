@@ -1,0 +1,6 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "cse12-pa5-Partition-master/pa5-starter/lib/junit-4.12.jar"
+    ]
+}

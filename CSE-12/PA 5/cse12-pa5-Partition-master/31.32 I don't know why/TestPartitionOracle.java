@@ -1,5 +1,5 @@
 import static org.junit.Assert.*;
-import static java.util.Arrays;
+
 import org.junit.Test;
 
 /**
@@ -24,9 +24,10 @@ class CopyFirstElementPartition implements Partitioner {
 
 public class TestPartitionOracle {
     @Test
-    public void testGenerateinput() {
-        int n = 10;
-        String[] ex = PartitionOracle.generateInput(n);
-        assertEquals(n, ex.length);
+    public void testCopyFirstElementPartition() {
+        CounterExample ce = PartitionOracle.findCounterExample(new CopyFirstElementPartition());
+        System.out.println(ce);
+        assertNotNull(ce);
     }
+
 }

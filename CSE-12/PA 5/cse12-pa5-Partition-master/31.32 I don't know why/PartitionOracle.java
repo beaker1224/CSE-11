@@ -105,8 +105,8 @@ error5 = pivot is negative
 
     public static CounterExample findCounterExample(Partitioner p) {
         int low = 1;
-        int high = 4;
-        String[] before = generateInput(5);
+        int high = 6;
+        String[] before = generateInput(7);
         String[] after = Arrays.copyOf(before, before.length);
         int pivot = p.partition(after, low, high);
         String reason = PartitionOracle.isValidPartitionResult(before, low, high, pivot, after);

@@ -1,11 +1,13 @@
 // You can (and should) add "implements Partitioner" below once you have the implementation ready
-public class FirstElePivotPartitioner implements Partitioner{
-//from lecture sort quickly
+public class CentralPivotPartitioner {
+
     public int partition(String[] strs, int low, int high){
-        int pivot = low;
+        int pivot = (high + low) / 2;
         String Vpivot = strs[pivot];
+        strs[pivot] = strs[low];
+        strs[low] = Vpivot;
         int smallPointer = low + 1;
-        int largePointer = high - 1; //since high is length
+        int largePointer = high - 1;
 
         while(smallPointer <= largePointer){
             if(strs[smallPointer].compareTo(Vpivot) < 0){
@@ -22,6 +24,7 @@ public class FirstElePivotPartitioner implements Partitioner{
         strs[largePointer] = Vpivot;
         strs[low] = temp;
         
-        return largePointer; //which is the current position of the pivot
+        return largePointer;
+
     }
 }
