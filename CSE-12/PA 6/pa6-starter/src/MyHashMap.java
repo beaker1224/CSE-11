@@ -1,6 +1,4 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class MyHashMap<K, V> implements DefaultMap<K, V> {
 	public static final double DEFAULT_LOAD_FACTOR = 0.75;
@@ -50,20 +48,23 @@ public class MyHashMap<K, V> implements DefaultMap<K, V> {
 	// next time should've wrote the checks first before the actual manipulation
 	
 	public void expandCapacity(){
-		List<HashMapEntry<K, V>>[] temp = (List<HashMapEntry<K, V>>[]) (new List[capacity * 2]);
-		List<HashMapEntry<K, V>>[] original = buckets;
-		this.size = 0;
-		 for(int i = 0; i < buckets.length; i++){
-			if(original[i] == null){
-				continue;
-			}
-			for(HashMapEntry e:original[i]){
-				V v = (V) e.getValue();
-				K k = (K) e.getKey();
-				put(k, v);
-			}
-		 }
+		int newLen = this.buckets.length * 2;
+		List<HashMapEntry<K, V>>[] temp = (List<HashMapEntry<K, V>>[]) (new List[newLen]);
+		List<HashMapEntry<K, V>>[] ori = buckets;
 		this.buckets = temp;
+
+		for(int i = 0; i < newLen; i++){
+		temp[i] = new ArrayList<>();
+		}
+
+		for(List<HashMapEntry<K, V>> b:ori){
+			for(HashMapEntry<K, V> e:b){
+				int index = Math.abs(e.getKey().hashCode()) % newLen;
+				temp[index].add(e);
+			}
+		}
+		buckets = temp;
+		capacity = newLen;
 	}
 
 	@Override
@@ -73,18 +74,20 @@ public class MyHashMap<K, V> implements DefaultMap<K, V> {
 			throw new IllegalArgumentException(ILLEGAL_ARG_NULL_KEY);
 		}
 
-		if(size > buckets.length * loadFactor){expandCapacity();}
+		if(size > capacity * loadFactor){expandCapacity();}
 
-		int hashKey = Objects.hashCode(key);
-		int index = Math.abs(hashKey % buckets.length); 
+		int hashKey = key.hashCode();
+		int index = Math.abs(hashKey) % capacity; 
 		List<HashMapEntry<K, V>> sBucket = buckets[index];
-		
+		if(sBucket == null){
+			sBucket = new ArrayList<HashMapEntry<K, V>>();
+		}
 		for(HashMapEntry<K, V> e : sBucket){
 			if(e.getKey().equals(key)){
 				return false; // this means there is a duplicate, maybe an error msg need to be displayed?
 			}
 		}
-		sBucket.add(new HashMapEntry<K, V>(key, value));
+		sBucket.add(new HashMapEntry<>(key, value));
 		size ++;
 		return true;
 	}
@@ -94,8 +97,8 @@ public class MyHashMap<K, V> implements DefaultMap<K, V> {
 		if(key == null){
 			throw new IllegalArgumentException(ILLEGAL_ARG_NULL_KEY);
 		}
-		int hashKey = Objects.hashCode(key);
-		int index = Math.abs(hashKey % buckets.length);
+		int hashKey = key.hashCode();
+		int index = Math.abs(hashKey) % capacity;
 		List<HashMapEntry<K, V>> sBucket = buckets[index];
 		for (HashMapEntry<K, V> e:sBucket){
 			if(e.getKey().equals(key)){
@@ -111,8 +114,8 @@ public class MyHashMap<K, V> implements DefaultMap<K, V> {
 		if(key == null){
 			throw new IllegalArgumentException(ILLEGAL_ARG_NULL_KEY);
 		}
-		int hashKey = Objects.hashCode(key);
-		int index = Math.abs(hashKey % buckets.length);
+		int hashKey = key.hashCode();
+		int index = Math.abs(hashKey) % capacity;
 		List<HashMapEntry<K, V>> sBucket = buckets[index];
 		for (HashMapEntry<K, V> e:sBucket){
 			if(e.getKey().equals(key)){
@@ -144,9 +147,11 @@ public class MyHashMap<K, V> implements DefaultMap<K, V> {
 		if(key == null){
 			throw new IllegalArgumentException(ILLEGAL_ARG_NULL_KEY);
 		}
-		int hashKey = Objects.hashCode(key);
-		int index = Math.abs(hashKey % buckets.length); 
+
+		int hashKey = key.hashCode();
+		int index = Math.abs(hashKey) % capacity; 
 		List<HashMapEntry<K, V>> sBucket = buckets[index];
+
 		for (HashMapEntry<K, V> e:sBucket){
 			if(e.getKey().equals(key)){
 				return e.getValue();
@@ -179,7 +184,7 @@ public class MyHashMap<K, V> implements DefaultMap<K, V> {
 	@Override
 	public List<K> keys() {
 		List<K> keyList = new ArrayList<>();
-		for(int i = 0; i < buckets.length; i++){
+		for(int i = 0; i < capacity; i++){
 			if(buckets[i] == null){
 				continue;
 			}
