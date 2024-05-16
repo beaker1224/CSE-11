@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -37,7 +38,6 @@ public class MyHashMap<K, V> implements DefaultMap<K, V> {
 		if(!(loadFactor > 0)){
 			throw new IllegalArgumentException(ILLEGAL_ARG_LOAD_FACTOR);
 		}
-		// TODO Finish initializing instance fields
 		this.loadFactor = loadFactor;
 		this.capacity = initialCapacity;
 		this.size = 0;
@@ -45,63 +45,150 @@ public class MyHashMap<K, V> implements DefaultMap<K, V> {
 		buckets = (List<HashMapEntry<K, V>>[]) new List<?>[capacity];
 
 		// if you use Linear Probing
-		entries = (HashMapEntry<K, V>[]) new HashMapEntry<?, ?>[initialCapacity];
+		// entries = (HashMapEntry<K, V>[]) new HashMapEntry<?, ?>[initialCapacity];
+	}
+	// next time should've wrote the checks first before the actual manipulation
+	
+	public void expandCapacity(){
+		List<HashMapEntry<K, V>>[] temp = (List<HashMapEntry<K, V>>[]) (new List[capacity * 2]);
+		List<HashMapEntry<K, V>>[] original = buckets;
+		this.size = 0;
+		 for(int i = 0; i < buckets.length; i++){
+			if(original[i] == null){
+				continue;
+			}
+			for(HashMapEntry e:original[i]){
+				V v = (V) e.getValue();
+				K k = (K) e.getKey();
+				put(k, v);
+			}
+		 }
+		this.buckets = temp;
 	}
 
 	@Override
 	public boolean put(K key, V value) throws IllegalArgumentException {
 		// can also use key.hashCode() assuming key is not null
-		int keyHash = Objects.hashCode(key); 
-		// TODO Auto-generated method stub
-		return false;
+		if(key == null){
+			throw new IllegalArgumentException(ILLEGAL_ARG_NULL_KEY);
+		}
+
+		if(size > buckets.length * loadFactor){expandCapacity();}
+
+		int hashKey = Objects.hashCode(key);
+		int index = Math.abs(hashKey % buckets.length); 
+		List<HashMapEntry<K, V>> sBucket = buckets[index];
+		
+		for(HashMapEntry<K, V> e : sBucket){
+			if(e.getKey().equals(key)){
+				return false; // this means there is a duplicate, maybe an error msg need to be displayed?
+			}
+		}
+		sBucket.add(new HashMapEntry<K, V>(key, value));
+		size ++;
+		return true;
 	}
 
 	@Override
 	public boolean replace(K key, V newValue) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		if(key == null){
+			throw new IllegalArgumentException(ILLEGAL_ARG_NULL_KEY);
+		}
+		int hashKey = Objects.hashCode(key);
+		int index = Math.abs(hashKey % buckets.length);
+		List<HashMapEntry<K, V>> sBucket = buckets[index];
+		for (HashMapEntry<K, V> e:sBucket){
+			if(e.getKey().equals(key)){
+				e.setValue(newValue);
+				return true;
+			}
+		}
 		return false;
 	}
 
 	@Override
 	public boolean remove(K key) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		if(key == null){
+			throw new IllegalArgumentException(ILLEGAL_ARG_NULL_KEY);
+		}
+		int hashKey = Objects.hashCode(key);
+		int index = Math.abs(hashKey % buckets.length);
+		List<HashMapEntry<K, V>> sBucket = buckets[index];
+		for (HashMapEntry<K, V> e:sBucket){
+			if(e.getKey().equals(key)){
+				sBucket.remove(e);
+				size--;
+				return true;
+			}
+		}
 		return false;
 	}
 
 	@Override
 	public void set(K key, V value) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		
+		if(key == null){
+			throw new IllegalArgumentException(ILLEGAL_ARG_NULL_KEY);
+		}
+
+		if(replace(key, value)){ //which means if it replaces successfully, return, if it is not, add to the end.
+			return;
+		}else{
+			put(key, value);
+			size++;
+		}
+	
 	}
 
 	@Override
 	public V get(K key) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
+		if(key == null){
+			throw new IllegalArgumentException(ILLEGAL_ARG_NULL_KEY);
+		}
+		int hashKey = Objects.hashCode(key);
+		int index = Math.abs(hashKey % buckets.length); 
+		List<HashMapEntry<K, V>> sBucket = buckets[index];
+		for (HashMapEntry<K, V> e:sBucket){
+			if(e.getKey().equals(key)){
+				return e.getValue();
+			}
+		}
 		return null;
 	}
 
 	@Override
 	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.size;
 	}
 
 	@Override
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return false;
+		return (this.size == 0);
 	}
 
 	@Override
 	public boolean containsKey(K key) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		return false;
+		if(key == null){
+			throw new IllegalArgumentException(ILLEGAL_ARG_NULL_KEY);
+		}
+		if(get(key) == null){
+			return false;
+		}
+		return true;
 	}
 
 	@Override
 	public List<K> keys() {
-		// TODO Auto-generated method stub
-		return null;
+		List<K> keyList = new ArrayList<>();
+		for(int i = 0; i < buckets.length; i++){
+			if(buckets[i] == null){
+				continue;
+			}
+			List<HashMapEntry<K, V>> sBucket = buckets[i];
+			for(HashMapEntry<K, V> e:sBucket){
+				keyList.add(e.key);
+			}
+		}
+		return keyList;
 	}
 	
 	private static class HashMapEntry<K, V> implements DefaultMap.Entry<K, V> {
