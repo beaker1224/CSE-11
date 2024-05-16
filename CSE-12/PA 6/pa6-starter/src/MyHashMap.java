@@ -31,8 +31,16 @@ public class MyHashMap<K, V> implements DefaultMap<K, V> {
 	 */
 	@SuppressWarnings("unchecked")
 	public MyHashMap(int initialCapacity, double loadFactor) throws IllegalArgumentException {
+		if(initialCapacity < 0){
+			throw new IllegalArgumentException(ILLEGAL_ARG_CAPACITY);
+		}
+		if(!(loadFactor > 0)){
+			throw new IllegalArgumentException(ILLEGAL_ARG_LOAD_FACTOR);
+		}
 		// TODO Finish initializing instance fields
-
+		this.loadFactor = loadFactor;
+		this.capacity = initialCapacity;
+		this.size = 0;
 		// if you use Separate Chaining
 		buckets = (List<HashMapEntry<K, V>>[]) new List<?>[capacity];
 
