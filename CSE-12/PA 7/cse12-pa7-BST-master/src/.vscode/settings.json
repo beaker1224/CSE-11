@@ -1,0 +1,6 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "d:\\study\\UCSD-Undergrade-classes\\CSE\\CSE\\CSE-12\\PA 7\\cse12-pa7-BST-master\\lib\\junit-4.12.jar"
+    ]
+}
