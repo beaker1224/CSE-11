@@ -31,9 +31,10 @@ public class FileSystem {
     }
 
     public boolean add(String fileName, String directory, String modifiedDate) {
-        if(fileName == null){fileName = "";}
-        if(directory == null){directory = "/";}
-        if(modifiedDate == null){modifiedDate = "01/01/2021";}
+        if(fileName == null || directory == null || modifiedDate == null){
+            throw new IllegalArgumentException("one of the input is null");
+        }
+        
 
         FileData file = new FileData(fileName, directory, modifiedDate);
         ArrayList<FileData> fns = nameMap.get(fileName);

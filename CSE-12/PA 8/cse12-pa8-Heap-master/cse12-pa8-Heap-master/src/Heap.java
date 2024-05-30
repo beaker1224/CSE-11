@@ -20,13 +20,14 @@ class Heap<K, V> implements PriorityQueue<K, V> {
 
     public Entry<K, V> poll(){
         if(this.size() == 0){throw new NoSuchElementException();}
-        // only one presents
-        if(this.size() == 1){ return this.peek();}
+        
 
         Entry<K, V> remove = this.peek();
         // change with the last from the list, then remove
         swap(0, this.size() - 1);
         this.entries.remove(this.size() - 1);
+        if(this.entries.size() == 0){return remove;}
+
         bubbleDown(0);
 
         return remove;
@@ -60,8 +61,8 @@ class Heap<K, V> implements PriorityQueue<K, V> {
     }
 
     public void swap(int i1, int i2){
-        Entry<k, V> e1 = this.entries.get(i1);
-        Entry<k, V> e2 = this.entries.get(i2);
+        Entry<K, V> e1 = this.entries.get(i1);
+        Entry<K, V> e2 = this.entries.get(i2);
 
         this.entries.set(i2, e1);
         this.entries.set(i1, e2);

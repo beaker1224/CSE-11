@@ -14,8 +14,6 @@ public class MyHashMap<K, V> implements DefaultMap<K, V> {
 	// Use this instance variable for Separate Chaining conflict resolution
 	private List<HashMapEntry<K, V>>[] buckets;  
 	
-	// Use this instance variable for Linear Probing
-	private HashMapEntry<K, V>[] entries; 	
 
 	public MyHashMap() {
 		this(DEFAULT_INITIAL_CAPACITY, DEFAULT_LOAD_FACTOR);
@@ -40,10 +38,12 @@ public class MyHashMap<K, V> implements DefaultMap<K, V> {
 		this.capacity = initialCapacity;
 		this.size = 0;
 		// if you use Separate Chaining
-		buckets = (List<HashMapEntry<K, V>>[]) new List<?>[capacity];
+		buckets = new List[capacity];
 
-		// if you use Linear Probing
-		// entries = (HashMapEntry<K, V>[]) new HashMapEntry<?, ?>[initialCapacity];
+		for(int i = 0; i < capacity; i++){
+			//instantiate
+			buckets[i] = new ArrayList<>();
+		}
 	}
 	// next time should've wrote the checks first before the actual manipulation
 	
@@ -74,14 +74,10 @@ public class MyHashMap<K, V> implements DefaultMap<K, V> {
 			throw new IllegalArgumentException(ILLEGAL_ARG_NULL_KEY);
 		}
 
-		if(size > capacity * loadFactor){expandCapacity();}
-
 		int hashKey = key.hashCode();
 		int index = Math.abs(hashKey) % capacity; 
 		List<HashMapEntry<K, V>> sBucket = buckets[index];
-		if(sBucket == null){
-			sBucket = new ArrayList<HashMapEntry<K, V>>();
-		}
+
 		for(HashMapEntry<K, V> e : sBucket){
 			if(e.getKey().equals(key)){
 				return false; // this means there is a duplicate, maybe an error msg need to be displayed?
@@ -89,6 +85,8 @@ public class MyHashMap<K, V> implements DefaultMap<K, V> {
 		}
 		sBucket.add(new HashMapEntry<>(key, value));
 		size ++;
+		// expand after increment
+		if(size > (capacity * loadFactor)){expandCapacity();}
 		return true;
 	}
 
@@ -137,7 +135,6 @@ public class MyHashMap<K, V> implements DefaultMap<K, V> {
 			return;
 		}else{
 			put(key, value);
-			size++;
 		}
 	
 	}
